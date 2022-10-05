@@ -1,0 +1,1461 @@
+1.Traverse a Singly Linked List 
+
+#include <iostream>
+using namespace std;
+struct Node {
+    int data;
+    Node* next;
+};
+class LinkedList {
+  private:
+    Node* head;
+  public:
+    LinkedList(){
+      head = NULL;
+    }
+     void push_back(int newElement) {
+      Node* newNode = new Node();
+      newNode->data = newElement;
+      newNode->next = NULL;
+      if(head == NULL) {
+        head = newNode;
+      } else {
+        Node* temp = head;
+        while(temp->next != NULL)
+          temp = temp->next;
+        temp->next = newNode;
+      }
+    }
+
+    void PrintList() {
+      Node* temp = head;
+      if(temp != NULL) {
+        cout<<"The list contains: ";
+        while(temp != NULL) {
+          cout<<temp->data<<" ";
+          temp = temp->next;
+        }
+        cout<<endl;
+      } else {
+        cout<<"The list is empty.\n";
+      }
+    }
+};
+
+int main() {
+  LinkedList MyList;
+
+  MyList.push_back(10);
+  MyList.push_back(20);
+  MyList.push_back(30);
+  MyList.PrintList();
+
+  return 0;
+}
+
+
+
+
+2. Search an element in a Singly Linked List
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+void search(int A[],int n,int val){
+int flag=0;
+for(int i=0;i<n;i++){
+    if(A[i]==val){
+        cout<<val<<"present at loacation:"<<i<<endl;
+        flag=1;
+    }
+}
+if(flag==0)
+    cout<<val<<"not present in array";
+}
+int* sort(int A[],int n){
+int* B=new int[n];
+for(int i=0;i<n;i++) B[i]=A[i];
+int tmp;
+for(int i=0;i<n-1;i++){
+    for(int j=i+1;i<n;j++){
+        if(B[i]>B[j]){
+            tmp=B[i];
+            B[i]=B[j];
+            B[j]=tmp;
+        }
+    }
+}return B;
+}
+int* reverse(int A[], int n){
+    int* B=new int[n];
+    for (int i=0; i<n; i++)B[i]=A[i];
+    int tmp;
+    for (int i=0, j=n-1; i<n/2;i++, j -- ){
+            tmp=B[i];
+    B[i]=B[j];
+    B[j]=tmp;
+    }
+return B;
+}
+void display(int A[], int n){
+    for (int i=0; i<n; i++)
+        cout <<A[i]<<" ";
+}
+int main()
+{
+    int n;
+    system("cls");
+    cout <<"Enter size of array : ";
+    cin>>n;
+    int *A=new int[n];
+    cout <<"Enter "<<n<<" numbers ... \n";
+    for(int i=0; i<n;i++) cin>>A[i];
+    int ch;
+    int *X;
+    do{
+            cout <<"Original Array : ";
+    display(A,n);
+    cout<<"\nMenu(1.Search, 2.Sort 3.Reverse, 4.Exit)";
+    cout<<"\nEnter Choice:";
+    cin>>ch;
+    switch(ch){
+        case 1:
+            int val;
+            cout <<"Enter no. to Search : ";
+            cin>>val;
+            search(A,n, val);
+            break;
+        case 2:
+            X=sort(A,n) ;
+            cout<<"\nSorted Array : ";
+            display(X,n);
+            delete []X;
+            break;
+        case 3:
+            X=reverse(A, n) ;
+            cout <<"\nReverse Array : ";
+            display(X,n) ;
+            delete []X;
+            break;
+        case 4:
+            cout<<"Stop Processing ... ";
+            break;
+            default:
+                cout<<"\nInvalid Entry! !!";
+    }
+                getch();
+                }
+                while(ch!=4);
+                delete []A;
+                return 0;
+
+}
+
+
+
+
+3.find the largest element in a Singly Linked List
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+int largestElement(struct Node* head)
+{
+    int max = INT_MIN;
+    while (head != NULL) {
+        if (max < head->data)
+            max = head->data;
+        head = head->next;
+    }
+    return max;
+}
+int smallestElement(struct Node* head)
+{
+    int min = INT_MAX;
+    while (head != NULL) {
+        if (min > head->data)
+            min = head->data;
+        head = head->next;
+    }
+    return min;
+}
+void push(struct Node** head, int data)
+{
+    struct Node* newNode =
+        (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = (*head);
+    (*head) = newNode;
+}
+// Display linked list.
+void printList(struct Node* head)
+{
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+int main()
+{
+    struct Node* head = NULL;
+    push(&head, 9);
+    push(&head, 7);
+    push(&head, 2);
+    push(&head, 5);
+
+    printf("Linked list is: ");
+    printList(head);
+    printf("Maximum element in linked list: ");
+    int max_element = largestElement(head);
+    printf("%d\n",max_element);
+    printf("Minimum element in linked list: ");
+    int small = smallestElement(head);
+     printf("%d\n",small);
+
+    return 0;
+}
+
+
+
+
+4.Stack with push, pop, peek, isEmpty and isFull methods. Push and pop few values
+
+
+
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+template<class type>
+class Stack{
+private:
+int Max, Top;
+type *List;
+public:
+Stack(int stacksize){
+if(stacksize <=0){
+cout<<"Stack size cannot be -ve. Default size is 10";
+stacksize=10;
+}
+Max=stacksize;
+Top=-1;
+List = new type[Max];
+for (int i=0; i<Max; i++)
+List[i]=NULL;
+}
+~Stack(){
+delete []List;
+}
+bool isEmpty(){
+return(Top == -1);
+}
+bool isFull(){
+return(Top ==Max-1);
+}
+void push(type newitem){
+if(isFull())
+cout<<"Stack Overflow"<<endl;
+else{
+List[++Top] = newitem;
+}
+}
+void pop(){
+if(isEmpty())
+cout<<"Stack Underflow"<<endl;
+else
+Top--;
+}
+
+type peek(){
+if (isEmpty()){
+cout<<"Stack Underflow";
+return NULL;
+}
+else return List[Top];
+}
+void display(){
+cout<<"\nTop : "<<Top;
+cout<<"\nStack : ";
+for( int i=0; i<=Top; i++)
+cout<<List[i]<<"\t";
+}
+};
+int main(){
+Stack<int> obj(5);
+int ch, val;
+while(true){
+cout<<"\n\n\tStack Operations(1.push, 2.pop, 3.peek, 4.exit) :";
+cin>>ch;
+switch(ch){
+case 1:
+cout<<"\n\tEnter integer to push : ";
+cin>>val;
+obj.push(val);
+break;
+case 2:
+obj.pop();
+break;
+case 3:
+val=obj.peek();
+if(val != NULL)
+cout<<"\n\tTop element of the stack : "<<val;
+break;
+case 4:
+exit(0);
+}
+obj.display();
+}
+return 0;
+}
+
+
+
+
+
+5.Queue with enQueue, deQueue, getFront, isEmpty and isFull methods. enQueue and deQueue few values
+
+
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+template<typename type>
+class Queue{
+private:
+  int Max, Front, Rear;
+  type *List;
+public:
+    Queue(int queuesize){
+    if(queuesize <=0){
+        cout<<"Queue size cannot be -ve. Default size is 10 ";
+        queuesize=10;
+    }
+    Max=queuesize;
+    Front=-1;
+    Rear=-1;
+    List = new type[Max];
+    for(int i=0; i<Max; i++)
+        List[i]=NULL;
+
+    }
+    ~Queue(){
+    delete []List;
+    }
+    bool isEmpty(){
+    return (Front==-1 || Front>Rear);
+    }
+    bool isFull(){
+    return (Rear == Max-1);
+    }
+    void enQueue(type newitem){
+    if (isFull())
+        cout<<"Queue overflow"<<endl;
+        else{
+            if(Front==-1) Front=0;
+            List[++Rear] = newitem;
+        }
+    }
+    void deQueue(){
+    if(isEmpty())
+        cout<<"Queue underflow"<<endl;
+        else
+            Front++;
+    }
+    type getFront(){
+    if(isEmpty()){
+        cout<<"Queue underflow"<<endl;
+        return NULL;
+    }
+    else
+        return List[Front];
+    }
+    void display(){
+    cout<<"\nFront :"<<Front;
+    cout<<"\nRear :"<<Rear;
+    cout<<endl;
+    if(!isEmpty()){
+        for(int i=Front; i<=Rear; i++)
+            cout<<List[i]<<"\t";
+        }
+      }
+};
+int main(){
+Queue<int> obj(5);
+int ch, val;
+while(true){
+    cout<<"\n\n\tQueue operation(1.enQueue 2.deQueue 3.getFront 4.exit :";
+    cin>>ch;
+    switch(ch){
+case 1:
+cout<<"\n\tEnter integer :";
+cin>>val;
+obj.enQueue(val);
+break;
+case 2:
+obj.deQueue();
+break;
+case 3:
+    val=obj.getFront();
+    if(val != NULL)
+        cout<<"Top element of the Queue :"<<val;
+    break;
+case 4:
+    exit(0);
+    }
+    obj.display();
+}
+    return 0;
+    }
+
+
+
+
+
+6.Circular Queue with enQueue, deQueue, getFront, isEmpty and isFull methods. enQueue and deQueue few values
+
+
+#include <stdio.h>
+
+# define max 6
+int queue[max];  // array declaration
+int front=-1;
+int rear=-1;
+// function to insert an element in a circular queue
+void enqueue(int element)
+{
+    if(front==-1 && rear==-1)   // condition to check queue is empty
+    {
+        front=0;
+        rear=0;
+        queue[rear]=element;
+    }
+    else if((rear+1)%max==front)  // condition to check queue is full
+    {
+        printf("Queue is overflow..");
+    }
+    else
+    {
+        rear=(rear+1)%max;       // rear is incremented
+        queue[rear]=element;     // assigning a value to the queue at the rear position.
+    }
+}
+
+// function to delete the element from the queue
+int dequeue()
+{
+    if((front==-1) && (rear==-1))  // condition to check queue is empty
+    {
+        printf("\nQueue is underflow..");
+    }
+ else if(front==rear)
+{
+   printf("\nThe dequeued element is %d", queue[front]);
+   front=-1;
+   rear=-1;
+}
+else
+{
+    printf("\nThe dequeued element is %d", queue[front]);
+   front=(front+1)%max;
+}
+}
+// function to display the elements of a queue
+void display()
+{
+    int i=front;
+    if(front==-1 && rear==-1)
+    {
+        printf("\n Queue is empty..");
+    }
+    else
+    {
+        printf("\nElements in a Queue are :");
+        while(i<=rear)
+        {
+            printf("%d,", queue[i]);
+            i=(i+1)%max;
+        }
+    }
+}
+int main()
+{
+    int choice=1,x;   // variables declaration
+
+    while(choice<4 && choice!=0)   // while loop
+    {
+    printf("\n Press 1: Insert an element");
+    printf("\nPress 2: Delete an element");
+    printf("\nPress 3: Display the element");
+    printf("\nEnter your choice");
+    scanf("%d", &choice);
+
+    switch(choice)
+    {
+
+        case 1:
+
+        printf("Enter the element which is to be inserted");
+        scanf("%d", &x);
+        enqueue(x);
+        break;
+        case 2:
+        dequeue();
+        break;
+        case 3:
+        display();
+
+    }}
+    return 0;
+}
+
+
+
+
+7.Doubly linked list insertBeg, forward and backward traversal only. Insert few values and traverse and display
+
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+template<typename type>
+class DLinkedList{
+    struct Node{
+        type data;
+        Node *next;
+        Node *prev;
+    };
+    Node *begin=NULL, *end=NULL;
+public:
+    void forward_traverse(){
+        if(begin==NULL)
+            cout<<"Empty..."<<endl;
+        else{
+            Node *ptr=begin;
+            cout<<"\nForward List : ";
+            while(ptr != NULL){
+                cout<<"\t"<<ptr->data;
+                ptr=ptr->next;
+            }
+        }
+    }
+    void backward_traverse(){
+        if(end==NULL)
+            cout<<"Empty..."<<endl;
+        else{
+            Node *ptr=end;
+            cout<<"\nBackward List : ";
+            while(ptr != NULL){
+                cout<<"\t"<<ptr->data;
+                ptr=ptr->prev;
+            }
+        }
+    }
+    void insertBeg(type x){
+        Node *tmp=new Node;
+        tmp->prev=NULL;
+        tmp->data=x;
+        if(begin==NULL){
+            tmp->next=NULL;
+            end=tmp;
+        }else{
+            tmp->next=begin;
+            begin->prev=tmp;
+        }
+        begin=tmp;
+    }
+    void insertEnd(type x){
+        Node *tmp=new Node;
+        tmp->data=x;
+        tmp->next=NULL;
+        if(end==NULL){
+            tmp->prev=NULL;
+            begin=end=tmp;
+        }else{
+            tmp->prev=end;
+            end->next=tmp;
+        }
+        end=tmp;
+    }
+    void sortlist(){
+        Node *i=begin, *j=NULL;
+        type tmp;
+        while (i != NULL){
+            j=i->next;
+            while(j!=NULL){
+                if(i->data >j->data){
+                    tmp=i->data;
+                    i->data=j->data;
+                    j->data=tmp;
+                }
+                j=j->next;
+            }
+            i=i->next;
+        }
+    }
+};
+int main() {
+    system("cls");
+    DLinkedList<int> obj;
+    int val,ch;
+    while (true){
+        cout<<"\nDoubly Linked List(1.insertBeg 2.insertEnd 3.sort 4.exit) : ";
+        cin>>ch;
+        switch(ch){
+        case 1:
+            cout<<"\n\tEnter integer : ";
+            cin>>val;
+            obj.insertBeg(val);
+            break;
+        case 2:
+            cout<<"\n\tEnter integer : ";
+            cin>>val;
+            obj.insertEnd(val);
+            break;
+        case 3:
+            obj.sortlist();
+            break;
+        case 4:
+            exit(0);
+        }
+        obj.forward_traverse();
+        obj.backward_traverse();
+    }
+    return 0;
+}
+
+
+
+
+1. For a given(any) binary tree do inorder/preorder/postorder
+
+
+#include<iostream>
+using namespace std;
+template<typename type>
+
+class Tree{
+
+    struct Node{
+    type data;
+    Node* left;
+    Node* right;
+
+    Node(type d){
+     this->data = d;
+     this->left = this->right =NULL;
+
+
+    }
+    };
+public:
+    Node* Root=NULL;
+    Tree(){
+
+     Node* f=new Node('F');
+     Node* b=new Node('B');
+     Node* g=new Node('G');
+     Node* a=new Node('A');
+     Node* d=new Node('D');
+     Node* i=new Node('I');
+     Node* c=new Node('C');
+     Node* e=new Node('E');
+     Node* h=new Node('H');
+     f->left=b; f->right=g;
+     g->left=a; b->right=d;
+     d->right=i;
+     d->left=c; d->right=e;
+     i->left=h;
+
+    Root=f;
+     }
+     void preorder(Node* ptr){
+     if(ptr!=NULL){
+
+    cout<<" "<<ptr->data;
+    preorder(ptr->left);
+    preorder(ptr->right);
+
+
+     }
+     }
+   void inorder(Node* ptr){
+     if(ptr!=NULL){
+    inorder(ptr->left);
+    cout<<" "<<ptr->data;
+    inorder(ptr->right);
+     }
+    }
+    void postorder(Node* ptr){
+     if(ptr!=NULL){
+
+    postorder(ptr->left);
+    postorder(ptr->right);
+    cout<<" "<<ptr->data;
+     }
+    }
+};
+    int main(){
+        Tree<char> obj;
+        if(obj.Root == NULL)
+            cout<<"Tree is empty!!";
+        else{
+            cout<<"\npreorder Traversal\t:\t";
+            obj.preorder(obj.Root);
+            cout<<"\ninorder Traversal\t:\t";
+            obj.inorder(obj.Root);
+            cout<<"\npostorder Traversal\t:\t";
+            obj.postorder(obj.Root);
+        }
+        return 0;
+          }
+
+
+
+
+2. binary search
+
+
+#include <iostream>
+using namespace std;
+
+int binarySearch(int array[], int x, int low, int high) {
+
+	// Repeat until the pointers low and high meet each other
+  while (low <= high) {
+    int mid = low + (high - low) / 2;
+
+    if (array[mid] == x)
+      return mid;
+
+    if (array[mid] < x)
+      low = mid + 1;
+
+    else
+      high = mid - 1;
+  }
+
+  return -1;
+}
+
+int main(void) {
+  int array[] = {3, 4, 5, 6, 7, 8, 9};
+  int x = 4;
+  int n = sizeof(array) / sizeof(array[0]);
+  int result = binarySearch(array, x, 0, n - 1);
+  if (result == -1)
+    printf("Not found");
+  else
+    printf("Element is found at index %d", result);
+}
+
+
+
+3.sequential search
+
+
+
+// C++ code to linearly search x in arr[]. If x
+// is present then return its location, otherwise
+// return -1
+
+#include <iostream>
+using namespace std;
+
+int search(int arr[], int N, int x)
+{
+	int i;
+	for (i = 0; i < N; i++)
+		if (arr[i] == x)
+			return i;
+	return -1;
+}
+
+// Driver's code
+int main(void)
+{
+	int arr[] = { 2, 3, 4, 10, 40 };
+	int x = 10;
+	int N = sizeof(arr) / sizeof(arr[0]);
+
+	// Function call
+	int result = search(arr, N, x);
+	(result == -1)
+		? cout << "Element is not present in array"
+		: cout << "Element is present at index " << result;
+	return 0;
+}
+
+
+
+
+
+4.selection sort
+
+
+
+// C++ program for implementation of
+// selection sort
+#include <bits/stdc++.h>
+using namespace std;
+
+//Swap function
+void swap(int *xp, int *yp)
+{
+	int temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void selectionSort(int arr[], int n)
+{
+	int i, j, min_idx;
+
+	// One by one move boundary of
+	// unsorted subarray
+	for (i = 0; i < n-1; i++)
+	{
+	
+		// Find the minimum element in
+		// unsorted array
+		min_idx = i;
+		for (j = i+1; j < n; j++)
+		if (arr[j] < arr[min_idx])
+			min_idx = j;
+
+		// Swap the found minimum element
+		// with the first element
+		if(min_idx!=i)
+			swap(&arr[min_idx], &arr[i]);
+	}
+}
+
+//Function to print an array
+void printArray(int arr[], int size)
+{
+	int i;
+	for (i=0; i < size; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+// Driver program to test above functions
+int main()
+{
+	int arr[] = {64, 25, 12, 22, 11};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	selectionSort(arr, n);
+	cout << "Sorted array: \n";
+	printArray(arr, n);
+	return 0;
+}
+// This is code is contributed by rathbhupendra
+
+
+
+
+
+5. insertion sort
+
+
+// C++ program for insertion sort
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to sort an array using
+// insertion sort
+void insertionSort(int arr[], int n)
+{
+	int i, key, j;
+	for (i = 1; i < n; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+
+		// Move elements of arr[0..i-1],
+		// that are greater than key, to one
+		// position ahead of their
+		// current position
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
+}
+
+// A utility function to print an array
+// of size n
+void printArray(int arr[], int n)
+{
+	int i;
+	for (i = 0; i < n; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+// Driver code
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6 };
+	int N = sizeof(arr) / sizeof(arr[0]);
+
+	insertionSort(arr, N);
+	printArray(arr, N);
+
+	return 0;
+}
+// This is code is contributed by rathbhupendra
+
+
+
+
+6.bubble sort
+
+
+// Bubble sort in C++
+
+#include <iostream>
+using namespace std;
+
+// perform bubble sort
+void bubbleSort(int array[], int size) {
+
+  // loop to access each array element
+  for (int step = 0; step < size; ++step) {
+
+    // loop to compare array elements
+    for (int i = 0; i < size - step; ++i) {
+
+      // compare two adjacent elements
+      // change > to < to sort in descending order
+      if (array[i] > array[i + 1]) {
+
+        // swapping elements if elements
+        // are not in the intended order
+        int temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+      }
+    }
+  }
+}
+
+// print array
+void printArray(int array[], int size) {
+  for (int i = 0; i < size; ++i) {
+    cout << "  " << array[i];
+  }
+  cout << "\n";
+}
+
+int main() {
+  int data[] = {-2, 45, 0, 11, -9};
+
+  // find array's length
+  int size = sizeof(data) / sizeof(data[0]);
+
+  bubbleSort(data, size);
+
+  cout << "Sorted Array in Ascending Order:\n";
+  printArray(data, size);
+}
+
+
+
+
+
+
+1st
+searching,sorting,receving
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+void search(int A[],int n,int val){
+int flag=0;
+for(int i=0;i<n;i++){
+    if(A[i]==val){
+        cout<<val<<"present at loacation:"<<i<<endl;
+        flag=1;
+    }
+}
+if(flag==0)
+    cout<<val<<"not present in array";
+}
+int* sort(int A[],int n){
+int* B=new int[n];
+for(int i=0;i<n;i++) B[i]=A[i];
+int tmp;
+for(int i=0;i<n-1;i++){
+    for(int j=i+1;i<n;j++){
+        if(B[i]>B[j]){
+            tmp=B[i];
+            B[i]=B[j];
+            B[j]=tmp;
+        }
+    }
+}return B;
+}
+int* reverse(int A[], int n){
+    int* B=new int[n];
+    for (int i=0; i<n; i++)B[i]=A[i];
+    int tmp;
+    for (int i=0, j=n-1; i<n/2;i++, j -- ){
+            tmp=B[i];
+    B[i]=B[j];
+    B[j]=tmp;
+    }
+return B;
+}
+void display(int A[], int n){
+    for (int i=0; i<n; i++)
+        cout <<A[i]<<" ";
+}
+int main()
+{
+    int n;
+    system("cls");
+    cout <<"Enter size of array : ";
+    cin>>n;
+    int *A=new int[n];
+    cout <<"Enter "<<n<<" numbers ... \n";
+    for(int i=0; i<n;i++) cin>>A[i];
+    int ch;
+    int *X;
+    do{
+            cout <<"Original Array : ";
+    display(A,n);
+    cout<<"\nMenu(1.Search, 2.Sort 3.Reverse, 4.Exit)";
+    cout<<"\nEnter Choice";
+    cin>>ch;
+    switch(ch){
+        case 1:
+            int val;
+            cout <<"Enter no. to Search : ";
+            cin>>val;
+            search(A,n, val);
+            break;
+        case 2:
+            X=sort(A,n) ;
+            cout<<"\nSorted Array : ";
+            display(X,n);
+            delete []X;
+            break;
+        case 3:
+            X=reverse(A, n) ;
+            cout <<"\nReverse Array : ";
+            display(X,n) ;
+            delete []X;
+            break;
+        case 4:
+            cout<<"Stop Processing ... ";
+            break;
+            default:
+                cout<<"\nInvalid Entry! !!";
+    }
+                getch();
+                }
+                while(ch!=4);
+                delete []A;
+                return 0;
+
+}
+
+
+
+
+
+2nd
+write a c++ program to merge two sorted arrays into a single sorted array
+
+
+
+#include <iostream>
+#include<conio.h>
+using namespace std;
+int *merge(int A[],int lb1,int ub1,int B[],int lb2,int ub2){
+    int*c=new int[ub1+ub2+1];
+    int i=lb1;int j=lb2;int k=0;
+    while(i<=ub1 and j<=ub2){
+        if(A[i]<B[j]){
+            c[k]=A[i];i++;k++;
+        }
+        else{
+        c[k]=B[j];j++;k++;
+        }
+        }
+    if(i>ub1){
+        while(j<=ub2)
+            c[k]=B[j];j++;k++;
+
+    }
+    else if(j>ub2)
+        while(i<=ub1){
+            c[k]=A[i];i++;k++;
+
+    }
+    return c;
+    }
+
+void display(int A[],int lb,int ub){
+    for(int i=lb;i<=ub;i++){
+        cout<<A[i]<<" ";
+    }
+
+}
+int main(){
+    int x[]={10,20,30,40,50,100};
+    int y[]={0,5,15,25,35,45,55,65,75,85,95,100};
+    int ub1=6; int ub2=12;
+    cout<<"\nFirst Array:";
+    display(x,0,ub1);
+    cout<<"\nSecond Array:";
+    display(y,0,ub2);
+    int *z=merge(x,0,ub1,y,0,ub2);
+    cout<<"Merged Array: ";
+    display(z,0,ub1+ub2+1);
+    delete []x;
+    delete []y;
+    delete []z;
+    return 0;
+}
+
+
+
+
+
+practical 2
+
+3rd
+write a c++ program to search an element in sigly linked list or one way linked list
+
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+template<typename type>
+class Linkedlist{
+struct Node{
+type data;
+Node* next;
+};
+Node* begin=NULL;
+public:
+void traverse(){
+if(begin=NULL)
+    cout<<"Empty..."<<endl;
+else{
+    Node*ptr=begin;
+    cout<<"\nList:";
+    while(ptr!=NULL){
+        cout<<"\t"<<ptr->data;
+    ptr=ptr->next;
+}
+}
+}
+void insertBeg(type x){
+Node*tmp=new Node;
+tmp->data=x;
+tmp->next=begin;
+begin=tmp;
+}
+void insertEnd(type x){
+Node*tmp=new Node;
+tmp->data=x;
+tmp->next=NULL;
+if(begin==NULL) begin=tmp;
+else{
+    Node*ptr=begin;
+    while(ptr->next !=NULL)
+        ptr=ptr->next;
+    ptr->next=tmp;
+}
+}
+void search(type val){
+ if(begin==NULL)
+    cout<<"Empty..."<<endl;
+ else{
+    int flag=0;
+    Node*ptr=begin;
+    while(ptr!=NULL){
+        if(ptr->data==val){
+            cout<<val<<"present at address:"<<ptr<<endl;
+            flag=1;
+        }
+        ptr=ptr->next;
+    }
+    if(flag==0)
+        cout<<val<<"NOT present";
+ }
+ }
+};
+int main(){
+system("cls");
+Linkedlist<int> obj;
+int val,ch;
+while(true){
+    cout<<"\n\nLinked list(1.insertBeg 2.insertEnd 3.search 4.exit):";
+    cin>>ch;
+    switch(ch){
+case 1:
+    cout<<"\n\tEnter integer:";
+    cin>>val;
+    obj.insertBeg(val);
+    break;
+case 2:
+    cout<<"\n\tEnter integer:";
+    cin>>val;
+    obj.insertEnd(val);
+    break;
+case 3:
+    cout<<"\n\tEnter integer to search:";
+    cin>>val;
+    obj.search(val);
+    break;
+case 4:
+    exit(0);
+    }
+    obj.traverse();
+}
+}
+
+
+
+
+practical 3
+
+4th
+write a c++ program sort doubly linked list or two way linked list
+
+
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+template<typename type>
+class DLinkedList {
+    struct Node {
+        type data;
+        Node *next;
+        Node *prev;
+} ;
+Node *begin=NULL, * end=NULL;
+public:
+void forward_traverse(){
+if (begin == NULL)
+cout<<"Empty ... "<<endl;
+else{
+Node *ptr=begin;
+cout<<"\nForward List:";
+while(ptr != NULL){
+cout<<"\t"<<ptr->data;
+ptr=ptr->next;
+}
+}
+}
+void backward_traverse(){
+    if(end == NULL)
+        cout<<"Empty ... "<<endl;
+    else{
+        Node *ptr=end;
+        cout<<"\nBackward List : ";
+        while(ptr != NULL){
+           cout<<"\t"<<ptr->data;
+           ptr=ptr->prev;
+        }
+    }
+}
+void insertBeg(type x){
+    Node *tmp=new Node;
+    tmp->prev=NULL;
+    tmp->data=x;
+    if (begin == NULL){
+    tmp->next=NULL;
+    end=tmp;
+}else{
+    tmp->next=begin;
+    begin->prev=tmp;
+}
+begin=tmp;
+}
+void insertEnd(type x){
+    Node *tmp=new Node;
+    tmp->data=x;
+    tmp->next=NULL;
+    if (end == NULL){
+    tmp->prev=NULL;
+    begin=end=tmp;
+}else{
+    tmp->prev=end;
+    end->next=tmp;
+}
+end=tmp;
+}
+void sortlist(){
+Node *i=begin, *j=NULL;
+type tmp;
+while(i!=NULL){
+    j=i->next;
+    while(j!=NULL){
+        if(i->data>j->data){
+            tmp=i->data;
+            i->data=j->data;
+            j->data=tmp;
+        }
+        j=j->next;
+    }
+    i=i->next;
+}
+}
+};
+int main(){
+system("cls");
+DLinkedList<int>obj;
+int val,ch;
+while(true){
+    cout<<"\nDoubly linked list(1.insertBeg 2.insertEnd 3.sort 4.exit):";
+    cin>>ch;
+switch(ch){
+case 1:
+     cout<<"\n\tEnter integer : ";
+     cin>>val;
+     obj. insertBeg (val) ;
+     break;
+case 2:
+    cout<<"\n\tEnter integer : ";
+    cin>>val;
+    obj. insertEnd (val) ;
+    break;
+case 3:
+    obj. sortlist () ;
+    break;
+case 4:
+     exit (0) ;
+}
+obj. forward_traverse () ;
+obj. backward_traverse () ;
+}
+return 0;
+}
+
+
+
+
+
+
+practical 4
+
+5th
+push ,pop,peek,serching
+
+
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+template<class type>
+class Stack{
+private:
+int Max, Top;
+type *List;
+public:
+Stack(int stacksize){
+if(stacksize <=0){
+cout<<"Stack size cannot be -ve. Default size is 10";
+stacksize=10;
+}
+Max=stacksize;
+Top=-1;
+List = new type[Max];
+for (int i=0; i<Max; i++)
+List[i]=NULL;
+}
+~Stack(){
+delete []List;
+}
+bool isEmpty(){
+return(Top == -1);
+}
+bool isFull(){
+return(Top ==Max-1);
+}
+void push(type newitem){
+if(isFull())
+cout<<"Stack Overflow"<<endl;
+else{
+List[++Top] = newitem;
+}
+}
+void pop(){
+if(isEmpty())
+cout<<"Stack Underflow"<<endl;
+else
+Top--;
+}
+
+type peek(){
+if (isEmpty()){
+cout<<"Stack Underflow";
+return NULL;
+}
+else return List[Top];
+}
+void display(){
+cout<<"\nTop : "<<Top;
+cout<<"\nStack : ";
+for( int i=0; i<=Top; i++)
+cout<<List[i]<<"\t";
+}
+};
+int main(){
+Stack<int> obj(5);
+int ch, val;
+while(true){
+cout<<"\n\n\tStack Operations(1.push, 2.pop, 3.peek, 4.exit) :";
+cin>>ch;
+switch(ch){
+case 1:
+cout<<"\n\tEnter integer to push : ";
+cin>>val;
+obj.push(val);
+break;
+case 2:
+obj.pop();
+break;
+case 3:
+val=obj.peek();
+if(val != NULL)
+cout<<"\n\tTop element of the stack : "<<val;
+break;
+case 4:
+exit(0);
+}
+obj.display();
+}
+return 0;
+}
+
+
+
+
+
+
+practical 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
